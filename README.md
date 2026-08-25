@@ -1,33 +1,49 @@
-# rudrakshtiwari.com
+# rudraksht.tech
 
-Personal site. Three files, no build step, no dependencies.
+Personal site. Vite + React + TypeScript + Tailwind v4, deployed on Vercel.
 
 ```
-index.html    the whole page
-style.css     the whole design
-resume.pdf    swap this file to update the résumé link
+src/content/      all copy — projects.ts and skills.ts. Edit text here, not in components.
+src/components/   header, hero, project posts, skills, contact, the intro sequence
+src/demos/        the live canvas simulations, one file each
+src/pages/        Home and the per-project case study
+src/lib/          smooth scroll, scroll restoration, the shared viewport check
+public/resume.pdf swap this file to update the résumé link
+legacy/           the previous hand-written static site, kept for reference
 ```
 
-## Run it locally
-
-Any static server will do:
+## Run it
 
 ```bash
-python -m http.server 4321
+npm install
+npm run dev
 ```
 
-Then open <http://localhost:4321>.
+## Build
 
-## Deploy
+```bash
+npm run build
+```
 
-Pushed to `main`, Vercel builds and deploys automatically — there is no build
-command, it just serves the directory.
+## Editing content
 
-## Editing
+Projects live in `src/content/projects.ts`. Each one carries its post blurb, the
+figures, the stack, and the long-form `caseStudy` sections rendered at
+`/work/<slug>`. Nothing about a project is hard-coded into a component.
 
-Projects live in `<article class="project">` blocks in `index.html`. Copy one to
-add another. The `.tag` span is optional; `.tag-live` is the green "Live" variant.
+A project only gets a `figures` entry for a number that has actually been
+measured, and only gets a `demo` when the code behind it does what the demo
+shows. SeatLock has neither until its locking layer is written.
 
-Colours are CSS custom properties at the top of `style.css`, defined once for
-light and overridden in the `prefers-color-scheme: dark` block. Change them in
-those two places and the whole page follows.
+## Design
+
+Colours and fonts are defined once in the `@theme` block at the top of
+`src/styles/globals.css`. Cyan is reserved for "succeeded" states in the demos
+and is never decorative.
+
+## A note on the reveals
+
+Everything animates in on scroll, but the hidden starting state is only applied
+once JS adds `.reveals-armed` to `<html>`. If the bundle fails, the page renders
+plain and fully readable rather than blank. `src/lib/viewport.ts` backs this
+with a 250ms poll that does not depend on `requestAnimationFrame`.

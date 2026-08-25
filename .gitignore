@@ -1,4 +1,14 @@
+node_modules
+dist
 .DS_Store
-Thumbs.db
+*.local
 .vercel
+
+# build info
+*.tsbuildinfo
+
+# editor/runner config
 .claude/
+
+# source photo, cropped into src/assets/photo.jpg
+personal-webiste.jpeg

@@ -1,170 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
 <title>Rudraksh Tiwari — Backend &amp; Systems Engineer</title>
-<meta name="description" content="I build backend systems: retrieval pipelines, concurrency-safe booking, distributed job queues. Selected projects, with source and live demos.">
+<meta name="description" content="I build backend systems: retrieval pipelines, concurrency-safe booking, distributed job queues. Selected projects, with source and live demos." />
+<meta name="theme-color" content="#08090A" />
+<link rel="canonical" href="https://rudraksht.tech/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-<meta property="og:title" content="Rudraksh Tiwari">
-<meta property="og:description" content="I build backend systems: retrieval pipelines, concurrency-safe booking, distributed job queues.">
-<meta property="og:type" content="website">
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Rudraksh Tiwari — Backend &amp; Systems Engineer" />
+<meta property="og:description" content="Job queues that finish the work after the worker dies. Booking flows that survive a race. Retrieval that answers from real data." />
+<meta property="og:url" content="https://rudraksht.tech/" />
+<meta property="og:image" content="https://rudraksht.tech/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://rudraksht.tech/og.png" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Rudraksh Tiwari",
+  "url": "https://rudraksht.tech/",
+  "jobTitle": "Backend & Systems Engineer",
+  "email": "mailto:rudraksh78779@gmail.com",
+  "sameAs": [
+    "https://github.com/Rudraksh-Tiwari",
+    "https://www.linkedin.com/in/rudraksh-tiwari-rt/"
+  ]
+}
+</script>
 </head>
 <body>
-
-<a class="skip" href="#work">Skip to work</a>
-
-<header class="masthead">
-  <div class="wrap">
-    <h1>Rudraksh&nbsp;Tiwari</h1>
-    <p class="pitch">I build backend systems, and I care most about correctness under concurrency —
-      job queues that finish the work after the worker dies, booking flows that survive a race,
-      retrieval pipelines that answer from real data instead of inventing it.</p>
-    <p class="meta">Final-year Computer Science student at Nitte Meenakshi Institute of Technology,
-      Bengaluru · graduating 2027 · looking for SDE and backend roles</p>
-
-    <nav class="links" aria-label="Contact and profiles">
-      <a href="https://github.com/Rudraksh-Tiwari">GitHub</a>
-      <a href="https://linkedin.com/in/rudraksh-tiwari">LinkedIn</a>
-      <a href="mailto:rudraksh78779@gmail.com">Email</a>
-      <a href="resume.pdf">Résumé <span aria-hidden="true">↓</span></a>
-    </nav>
-  </div>
-</header>
-
-<main class="wrap">
-
-  <section id="work" aria-labelledby="work-h">
-    <h2 id="work-h" class="section-h">Selected work</h2>
-
-    <article class="project">
-      <div class="p-head">
-        <h3>Clarifi</h3>
-        <span class="tag tag-live">Live</span>
-      </div>
-      <p class="p-sub">AI financial copilot — full-stack, deployed on AWS</p>
-      <p>Turns a raw bank statement into structured financial insight: parses the file, categorises every
-        transaction, flags anomalies, forecasts next month, and answers natural-language questions grounded
-        in the user's own history through a per-user vector index.</p>
-      <p class="note">Testing against a <em>real</em> Indian bank export rather than a clean sample CSV broke
-        the categoriser immediately: because nearly every line in an Indian statement contains <code>UPI</code>,
-        treating the payment rail as a category keyword collapsed roughly 87% of spending into one bucket.
-        Separating merchant identity from payment mechanism restored a real breakdown.</p>
-      <p class="note">The anomaly detector was rebuilt for the same reason. An Isolation Forest with a forced
-        contamination quota has to flag a fixed share of transactions whether or not anything is wrong.
-        Replacing it with log-scaled per-category robust z-scores (median and MAD) took the same statement from
-        13 false positives to 5 flags, each carrying a plain-language reason — and let an ordinary month
-        legitimately return nothing at all.</p>
-      <p class="stack">FastAPI · React 19 · PostgreSQL · ChromaDB · Groq Llama 3.1 · JWT · nginx · EC2</p>
-      <p class="p-links">
-        <a href="https://clarifi.page">clarifi.page</a>
-        <a href="https://github.com/Rudraksh-Tiwari">Source</a>
-      </p>
-    </article>
-
-    <article class="project">
-      <div class="p-head">
-        <h3>Loan Risk Analyzer</h3>
-      </div>
-      <p class="p-sub">Credit decisioning with explainable ML</p>
-      <p>Predicts loan approval across a 45,000-applicant dataset and explains each decision in plain English.
-        SHAP attributes the model's reasoning to specific applicant features; an LLM turns that attribution
-        into the sentence a customer would actually be told.</p>
-      <p class="note">XGBoost was selected over logistic regression and random forest on AUC-ROC
-        (0.978 against 0.953 and 0.974) and on minority-class F1 — the class that matters, since approving a
-        bad loan costs more than declining a good one.</p>
-      <p class="stack">Python · XGBoost · SHAP · Groq Llama 3.3 70B · Streamlit</p>
-      <p class="p-links">
-        <a href="https://github.com/Rudraksh-Tiwari/loan-risk-analyzer">Source</a>
-      </p>
-    </article>
-
-    <article class="project">
-      <div class="p-head">
-        <h3>taskq</h3>
-        <span class="tag">In progress</span>
-      </div>
-      <p class="p-sub">A distributed task queue, built from first principles</p>
-      <p>A background job system in the spirit of Sidekiq and Celery, with the reliability machinery written
-        by hand rather than delegated to a library: atomic job claim, crash recovery, retries with backoff,
-        and a dead-letter queue.</p>
-      <p class="note">Anyone can call an existing library's <code>enqueue()</code>. The harder thing is
-        building the guarantee underneath it — that once a job is accepted it runs to completion
-        <em>even if the worker is killed mid-execution</em>. That guarantee is the whole project.
-        The FIFO layer is a Redis list driven by atomic <code>LPUSH</code> / <code>BRPOP</code>, so concurrent
-        workers can enqueue and claim without losing or duplicating a job.</p>
-      <p class="stack">Python · Redis · Docker · FastAPI</p>
-      <p class="p-links">
-        <a href="https://github.com/Rudraksh-Tiwari">Source</a>
-      </p>
-    </article>
-
-    <article class="project">
-      <div class="p-head">
-        <h3>SeatLock</h3>
-        <span class="tag">In progress</span>
-      </div>
-      <p class="p-sub">Concurrency-safe ticket booking</p>
-      <p>One hard problem: two people click the same seat in the same millisecond — exactly one gets it, and
-        nobody is ever double-booked. Everything else in the system exists to serve that sentence.</p>
-      <p class="note">Two layers of defence. A Redis hold with a TTL is fast and optimistic — it greys the
-        seat out live for everyone, but cannot survive a crash on its own. The actual guarantee is a Postgres
-        <code>SELECT … FOR UPDATE</code> row lock at checkout, so two racing payments cannot both win. An
-        idempotency key means a double-clicked "Pay" never books twice.</p>
-      <p class="stack">Spring Boot 3 · PostgreSQL · Redis · STOMP WebSockets · React + TypeScript</p>
-      <p class="p-links">
-        <a href="https://github.com/Rudraksh-Tiwari">Source</a>
-      </p>
-    </article>
-
-  </section>
-
-  <section aria-labelledby="also-h">
-    <h2 id="also-h" class="section-h">Also built</h2>
-    <ul class="also">
-      <li>
-        <strong>Express Banking System</strong>
-        <span>Console banking on hand-written data structures — linked list, BST, queue, stack, merge sort.
-          Zero dependencies, 31 passing tests, and no test runner either.</span>
-      </li>
-      <li>
-        <strong>Client Management</strong>
-        <span>Angular 22 and MySQL scheduling app with validation that actually holds — an overlapping meeting
-          is refused and the message names the meeting it clashes with, while a meeting starting exactly when
-          another ends is allowed. 13 Gherkin scenarios, 60 steps.</span>
-      </li>
-      <li>
-        <strong>Streamify</strong>
-        <span>React 19 movie browser. Local filtering over a single fetch via <code>useMemo</code>, and three
-          distinct axios failure shapes each turned into one readable sentence.</span>
-      </li>
-    </ul>
-  </section>
-
-  <section aria-labelledby="tools-h">
-    <h2 id="tools-h" class="section-h">Tools</h2>
-    <p class="tools">Python · Java · JavaScript and TypeScript · SQL<br>
-      FastAPI · Spring Boot · React · Angular · Node<br>
-      PostgreSQL · MySQL · Redis · ChromaDB<br>
-      Docker · nginx · AWS EC2 · Git</p>
-  </section>
-
-  <section aria-labelledby="contact-h">
-    <h2 id="contact-h" class="section-h">Get in touch</h2>
-    <p class="closing">Open to software engineering roles. The fastest way to reach me is
-      <a href="mailto:rudraksh78779@gmail.com">rudraksh78779@gmail.com</a>.</p>
-  </section>
-
-</main>
-
-<footer class="wrap">
-  <p>Rudraksh Tiwari · Built by hand, no framework.</p>
-</footer>
-
+<div id="root"></div>
+<script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
