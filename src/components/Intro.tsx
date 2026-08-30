@@ -4,7 +4,7 @@ import photo from '../assets/photo.jpg'
 /**
  * The opening sequence.
  *
- *     0ms  three rings sweep inward at staggered speeds — racing requests
+ *     0ms  three rings sweep inward at staggered speeds - racing requests
  *   950ms  they collide; ONE locks, the other two dissolve
  *  1150ms  the photo settles inside the winner
  *  1150ms  ...and holds, so there is a moment to actually look at it
@@ -13,7 +13,7 @@ import photo from '../assets/photo.jpg'
  *  4000ms  overlay unmounts (page is interactive from 3550ms)
  *
  * Rules this obeys, because a slow or unskippable intro is worse than none:
- *   · the page underneath is fully rendered the whole time — this is an
+ *   · the page underneath is fully rendered the whole time - this is an
  *     overlay, never a content gate
  *   · any click, scroll, touch or keypress jumps straight to the end
  *   · it runs once per session
@@ -75,7 +75,7 @@ export default function Intro() {
     window.addEventListener('touchstart', skip, opts)
     window.addEventListener('keydown', skip, opts)
 
-    // 1 — rings converge
+    // 1 - rings converge
     rings.current.forEach((r, i) => {
       if (!r) return
       at(i * 80, () => {
@@ -85,7 +85,7 @@ export default function Intro() {
       })
     })
 
-    // 2 — exactly one survives
+    // 2 - exactly one survives
     at(660, () => {
       const [win, a, b] = rings.current
       if (a) { a.style.transition = 'opacity 250ms ease'; a.style.opacity = '0' }
@@ -97,7 +97,7 @@ export default function Intro() {
       }
     })
 
-    // 3 — the photo settles inside it
+    // 3 - the photo settles inside it
     at(720, () => {
       const p = photoRef.current
       if (!p) return
@@ -106,7 +106,7 @@ export default function Intro() {
       p.style.transform = 'scale(1)'
     })
 
-    // 4 — flight to the header slot, measured live so it always lands true
+    // 4 - flight to the header slot, measured live so it always lands true
     at(1220, () => {
       const slot = document.getElementById('avatar-slot')
       const asm = assembly.current
@@ -119,7 +119,7 @@ export default function Intro() {
       asm.style.transform = `translate(${dx}px, ${dy}px) scale(${s.width / 240})`
     })
 
-    // 5 — impact
+    // 5 - impact
     at(1820, () => {  // phase: impact
       const slot = document.getElementById('avatar-slot')
       const w = wave.current
@@ -171,7 +171,7 @@ export default function Intro() {
     })
     // ...but keep the overlay mounted until the shockwave has finished
     // travelling. It is pointer-events-none and fully transparent by now, so
-    // it blocks nothing — unmounting at 1560ms cut the wave off mid-flight,
+    // it blocks nothing - unmounting at 1560ms cut the wave off mid-flight,
     // which is why no explosion was visible.
     at(2500, finish, 'end')
 
@@ -189,7 +189,7 @@ export default function Intro() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[100]" aria-hidden="true">
-      {/* opaque ground — the site is already rendered underneath it */}
+      {/* opaque ground - the site is already rendered underneath it */}
       <div ref={overlay} className="absolute inset-0 bg-ink" />
 
       {/* shockwave + bloom, positioned at the avatar on impact */}

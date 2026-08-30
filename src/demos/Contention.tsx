@@ -2,12 +2,12 @@ import { useCanvasSim, PALETTE, type Sim } from './useCanvasSim'
 
 /**
  * taskq's exactly-once proof, as run by verify_stage3 test A: 45 jobs, three
- * worker processes of four threads each — twelve concurrent claimants — and
+ * worker processes of four threads each - twelve concurrent claimants - and
  * every job executed exactly once.
  *
  * Twelve claimants race for the grid. A job briefly flashes amber as it is
  * contended, then locks cyan. Because the Lua claim script is atomic, a cell
- * that is already taken can never be taken again — so no cell ever goes cyan
+ * that is already taken can never be taken again - so no cell ever goes cyan
  * twice, which is the thing being demonstrated.
  */
 

@@ -19,7 +19,7 @@ export function useSmoothScroll(): void {
 
     const lenis = new Lenis({
       duration: 1.1,
-      // expo-out: quick departure, long settle — the "expensive" feel
+      // expo-out: quick departure, long settle - the "expensive" feel
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       touchMultiplier: 1.6,
@@ -48,8 +48,8 @@ export function useSmoothScroll(): void {
  */
 export function scrollToTopNow(): void {
   // Move natively FIRST, then tell Lenis. Lenis applies even an "immediate"
-  // scroll from inside its rAF loop, so on a route change — or anywhere rAF is
-  // throttled — relying on it alone can leave the new page scrolled to wherever
+  // scroll from inside its rAF loop, so on a route change - or anywhere rAF is
+  // throttled - relying on it alone can leave the new page scrolled to wherever
   // the old one was.
   window.scrollTo(0, 0)
   instance?.scrollTo(0, { immediate: true })

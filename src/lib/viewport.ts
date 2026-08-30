@@ -14,7 +14,7 @@ let bound = false
  * One shared, rAF-throttled visibility check for the whole page.
  *
  * This replaces IntersectionObserver deliberately. IO is the idiomatic choice,
- * but it only reports when it feels like it — in throttled, backgrounded or
+ * but it only reports when it feels like it - in throttled, backgrounded or
  * non-compositing contexts it can fire once and then go quiet. Everything on
  * this page starts at opacity 0 and every canvas pauses when offscreen, so an
  * observer that stops reporting leaves the site blank and frozen. A geometry
@@ -56,7 +56,7 @@ let poll = 0
 function startPoll() {
   if (poll) return
   // Safety net. Scroll events are the normal trigger, but they are not
-  // guaranteed to arrive in every context — and everything on this page starts
+  // guaranteed to arrive in every context - and everything on this page starts
   // at opacity 0, so "no scroll event" must never mean "page stays blank".
   // Costs one rect read per pending element, four times a second, and stops
   // entirely once every element has revealed.
@@ -68,16 +68,24 @@ function startPoll() {
     }
     // Call measure directly rather than through schedule(). The poll is the
     // safety net, and routing it through requestAnimationFrame would make it
-    // depend on the very mechanism it exists to insure against — in any
+    // depend on the very mechanism it exists to insure against - in any
     // context where rAF is throttled or never fires, the net must still work.
     measure()
   }, 250)
 }
 
+let io: IntersectionObserver | undefined
+
 function bind() {
   if (bound) return
   bound = true
-  window.addEventListener('scroll', schedule, { passive: true })
+  // IntersectionObserver is the primary signal. A scroll listener is banned
+  // (it fires per frame and cannot be batched at the source), and it is also
+  // unnecessary: the observer reports entry, and the 250ms poll below covers
+  // the contexts where the observer goes quiet.
+  if (typeof IntersectionObserver !== 'undefined') {
+    io = new IntersectionObserver(() => measure(), { rootMargin: '200px' })
+  }
   window.addEventListener('resize', schedule, { passive: true })
   document.addEventListener('visibilitychange', schedule)
 }
@@ -91,6 +99,7 @@ export function observeVisibility(
   startPoll()
   const l: Listener = { el, margin, cb, last: false, added: performance.now() }
   listeners.add(l)
+  io?.observe(el)
 
   // Measure immediately so anything already on screen reveals without waiting
   // for a scroll event that may never come.
@@ -104,6 +113,7 @@ export function observeVisibility(
 
   return () => {
     listeners.delete(l)
+    io?.unobserve(el)
   }
 }
 
@@ -112,7 +122,7 @@ if (import.meta.env.DEV) {
   ;(window as unknown as Record<string, unknown>).__vp = { listeners, measure, schedule }
 }
 
-/** Nudge the shared check — call after the document height changes. */
+/** Nudge the shared check - call after the document height changes. */
 export function refreshVisibility(): void {
   schedule()
 }

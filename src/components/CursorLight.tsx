@@ -3,7 +3,7 @@ import { prefersReduced } from '../lib/reducedMotion'
 
 /**
  * A very low-opacity warm light trailing the cursor. It should never be
- * consciously noticed — it exists so the near-black ground reads with some
+ * consciously noticed - it exists so the near-black ground reads with some
  * depth instead of as a flat sheet.
  */
 export default function CursorLight() {

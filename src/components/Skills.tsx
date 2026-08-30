@@ -3,20 +3,15 @@ import Reveal from './primitives/Reveal'
 import MaskReveal from './primitives/MaskReveal'
 
 /**
- * Rendered as a spec sheet rather than a cloud of pill badges — same
+ * Rendered as a spec sheet rather than a cloud of pill badges - same
  * information, but it reads as a datasheet, which is the point.
  */
 export default function Skills() {
   return (
     <section id="skills" className="scroll-mt-20">
-      <div className="shell rule-t py-20 md:py-28">
+      <div className="shell rule-t pt-20 pb-0 md:pt-24 md:pb-0">
         <div className="grid grid-cols-12 gap-x-8 gap-y-6">
-          <div className="col-span-12 md:col-span-3">
-            <Reveal>
-              <p className="eyebrow">03 / Tools</p>
-            </Reveal>
-          </div>
-          <div className="col-span-12 md:col-span-9">
+          <div className="col-span-12 md:col-span-9 md:col-start-4">
             <MaskReveal className="h-section max-w-[16ch]">
               <h2>What I reach for.</h2>
             </MaskReveal>
@@ -32,7 +27,7 @@ export default function Skills() {
                     {g.label}
                   </dt>
                   <dd className="col-span-12 font-mono text-[13px] leading-relaxed tracking-[0.02em] text-bone sm:col-span-8">
-                    {g.items.join('   ·   ')}
+                    {g.items.join(' ')}
                   </dd>
                 </Reveal>
               ))}

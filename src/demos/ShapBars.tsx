@@ -3,8 +3,8 @@ import { useCanvasSim, PALETTE, easeOut, type Sim } from './useCanvasSim'
 /**
  * Loan Risk Analyzer: SHAP attribution resolving into a decision.
  *
- * Bars grow out from a centre axis — right for features pushing toward
- * approval, left for features pushing against — then the verdict lands.
+ * Bars grow out from a centre axis - right for features pushing toward
+ * approval, left for features pushing against - then the verdict lands.
  *
  * Three tiers, matching the decision engine in the app: below 0.3 approved,
  * below 0.7 flagged for human review, otherwise rejected. All three are shown

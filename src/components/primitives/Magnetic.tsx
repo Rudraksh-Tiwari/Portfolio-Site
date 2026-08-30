@@ -3,7 +3,7 @@ import { useReducedMotion } from '../../lib/reducedMotion'
 
 /**
  * Pulls an element a few pixels toward the cursor while hovered. Kept subtle
- * and CSS-eased — at higher strength it stops feeling responsive and starts
+ * and CSS-eased - at higher strength it stops feeling responsive and starts
  * feeling broken.
  */
 export default function Magnetic({

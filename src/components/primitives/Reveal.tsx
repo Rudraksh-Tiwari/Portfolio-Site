@@ -13,7 +13,7 @@ interface RevealProps {
  *
  * Deliberately a CSS class toggle rather than a JS-driven animation. The whole
  * page starts at opacity 0, so the reveal is on the critical path for the site
- * being readable at all — and a CSS transition cannot decide not to run.
+ * being readable at all - and a CSS transition cannot decide not to run.
  */
 export default function Reveal({ children, delay = 0, className }: RevealProps) {
   const [ref, inView] = useInViewOnce<HTMLDivElement>()

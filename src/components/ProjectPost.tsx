@@ -83,9 +83,11 @@ export default function ProjectPost({ project }: { project: Project }) {
           </dl>
         )}
 
-        <p className="mt-9 font-mono text-[11px] leading-relaxed tracking-[0.04em] text-smoke">
-          {stack.join('  ·  ')}
-        </p>
+        <ul className="mt-9 flex flex-wrap gap-x-5 gap-y-1.5 font-mono text-[11px] tracking-[0.04em] text-smoke">
+          {stack.map((t) => (
+            <li key={t}>{t}</li>
+          ))}
+        </ul>
 
         <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3">
           <Link

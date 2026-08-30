@@ -101,5 +101,5 @@ export const PALETTE = {
   fail: '#F0553B',
 } as const
 
-/** Ease-out cubic — the house easing, matching the CSS transitions. */
+/** Ease-out cubic - the house easing, matching the CSS transitions. */
 export const easeOut = (t: number) => 1 - Math.pow(1 - Math.min(Math.max(t, 0), 1), 3)

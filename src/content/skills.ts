@@ -5,7 +5,7 @@ export interface SkillGroup {
 
 /**
  * Drawn from what the projects on this site actually run, and kept in step
- * with the résumé. Nothing is listed that no project here demonstrates — a
+ * with the résumé. Nothing is listed that no project here demonstrates - a
  * tools list is a set of claims, and each one should have something behind it.
  */
 export const skillGroups: SkillGroup[] = [

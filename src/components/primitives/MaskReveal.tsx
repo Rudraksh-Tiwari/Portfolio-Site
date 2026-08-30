@@ -3,7 +3,7 @@ import { useInViewOnce } from '../../lib/useInViewOnce'
 
 /**
  * Wipes a line of type up from behind its own baseline. Used only on the serif
- * headings — if everything wiped, nothing would feel special.
+ * headings - if everything wiped, nothing would feel special.
  */
 export default function MaskReveal({
   children,

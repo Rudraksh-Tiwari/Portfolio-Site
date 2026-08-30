@@ -11,14 +11,9 @@ const LINKS = [
 export default function Contact() {
   return (
     <section id="contact" className="scroll-mt-20">
-      <div className="shell rule-t py-20 md:py-28">
+      <div className="shell rule-t pt-20 pb-20 md:pt-24 md:pb-28">
         <div className="grid grid-cols-12 gap-x-8 gap-y-6">
-          <div className="col-span-12 md:col-span-3">
-            <Reveal>
-              <p className="eyebrow">04 / Contact</p>
-            </Reveal>
-          </div>
-          <div className="col-span-12 md:col-span-9">
+          <div className="col-span-12 md:col-span-9 md:col-start-4">
             <MaskReveal className="h-section max-w-[18ch]">
               <h2>Open to software engineering roles.</h2>
             </MaskReveal>

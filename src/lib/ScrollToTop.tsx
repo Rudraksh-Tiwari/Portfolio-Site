@@ -9,7 +9,7 @@ import { jumpToSection, scrollToTopNow } from './smoothScroll'
  *
  * The retry runs on timers rather than requestAnimationFrame. rAF is the
  * natural choice, but it is throttled or suspended in plenty of real contexts
- * — and scroll restoration is navigation, not decoration, so it must not
+ * - and scroll restoration is navigation, not decoration, so it must not
  * depend on the animation clock running.
  */
 export default function ScrollToTop() {

@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Three design directions</title>
+<style>
+@font-face{font-family:'Playfair Display';src:url('/fonts/playfair-display-var.woff2') format('woff2-variations');font-weight:400 700;font-display:swap}
+@font-face{font-family:'Inter Tight';src:url('/fonts/inter-tight-var.woff2') format('woff2-variations');font-weight:100 900;font-display:swap}
+@font-face{font-family:'IBM Plex Mono';src:url('/fonts/plex-mono-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'IBM Plex Mono';src:url('/fonts/plex-mono-500.woff2') format('woff2');font-weight:500;font-display:swap}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#141416;font-family:'Inter Tight',system-ui,sans-serif;color:#EDEAE5}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 24px 80px}
+.pagehead h1{font-family:'Inter Tight';font-size:26px;font-weight:600;letter-spacing:-.02em}
+.pagehead p{color:#8B8781;font-size:14px;margin-top:8px;max-width:62ch;line-height:1.6}
+
+.dir{margin-top:52px}
+.dirbar{display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:14px}
+.dirname{font-family:'IBM Plex Mono';font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8B8781}
+.dirname b{color:#EDEAE5;font-weight:500}
+.pick{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:transparent;color:#F5A524;border:1px solid #F5A524;border-radius:2px;padding:7px 14px;cursor:pointer;transition:.18s}
+.pick:hover{background:#F5A524;color:#141416}
+.why{color:#8B8781;font-size:13.5px;line-height:1.65;max-width:74ch;margin-bottom:16px}
+.why b{color:#C9C5BF;font-weight:500}
+.frame{border:1px solid rgba(255,255,255,.12);border-radius:6px;overflow:hidden}
+
+/* ============ A. INSTRUMENT : dark, mono spec-sheet, density up ============ */
+.A{background:#0A0B0C;color:#E8E6E2;padding:34px 40px 40px;font-family:'Inter Tight'}
+.A .nav{display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono';font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#7D7972;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.1)}
+.A .nav b{color:#E8E6E2;font-weight:500}
+.A h2{font-size:46px;font-weight:650;letter-spacing:-.035em;line-height:1;margin-top:30px}
+.A .sub{color:#A5A19B;font-size:14.5px;margin-top:12px;max-width:52ch;line-height:1.55}
+.A .sub em{font-style:normal;color:#F5A524}
+.A .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);margin-top:28px}
+.A .cell{background:#0A0B0C;padding:16px 18px}
+.A .num{font-family:'IBM Plex Mono';font-size:30px;font-weight:500;letter-spacing:-.02em;color:#22D3EE}
+.A .cap{font-family:'IBM Plex Mono';font-size:10px;color:#7D7972;margin-top:7px;line-height:1.5;letter-spacing:.02em}
+.A .rows{margin-top:26px;border-top:1px solid rgba(255,255,255,.1)}
+.A .row{display:grid;grid-template-columns:26px 1fr auto;gap:18px;align-items:baseline;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.A .row .i{font-family:'IBM Plex Mono';font-size:10px;color:#55524D}
+.A .row .t{font-size:16px;font-weight:550;letter-spacing:-.01em}
+.A .row .d{font-size:13px;color:#8B8781;margin-top:3px}
+.A .row .m{font-family:'IBM Plex Mono';font-size:11px;color:#F5A524;white-space:nowrap}
+
+/* ============ B. DISPATCH : light editorial, serif, airy ============ */
+.B{background:#F4F2ED;color:#17150F;padding:34px 44px 44px;font-family:'Inter Tight'}
+.B .nav{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5C574E;padding-bottom:18px;border-bottom:1px solid rgba(0,0,0,.14)}
+.B .nav b{font-family:'Playfair Display';font-size:19px;color:#17150F}
+.B .lead{display:grid;grid-template-columns:1fr 2fr;gap:34px;margin-top:34px;align-items:start}
+.B .kicker{font-family:'IBM Plex Mono';font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#8A8377;line-height:1.9}
+.B h2{font-family:'Playfair Display';font-size:56px;font-weight:400;line-height:1.02;letter-spacing:-.015em}
+.B .sub{font-size:16px;color:#4A443B;margin-top:16px;max-width:46ch;line-height:1.6}
+.B .sub em{font-style:italic;color:#C2410C}
+.B .art{display:grid;grid-template-columns:1fr 2fr;gap:34px;margin-top:36px;padding-top:26px;border-top:1px solid rgba(0,0,0,.14)}
+.B .marg{font-family:'IBM Plex Mono';font-size:10.5px;color:#8A8377;line-height:1.9}
+.B .marg .big{font-family:'Playfair Display';font-size:40px;color:#C2410C;display:block;line-height:1}
+.B h3{font-family:'Playfair Display';font-size:27px;font-weight:400;letter-spacing:-.01em}
+.B .body{font-size:15px;color:#3D382F;line-height:1.68;margin-top:11px;max-width:60ch}
+.B .body b{color:#17150F;font-weight:600}
+
+/* ============ C. RUNTIME : demo-first, full-bleed canvas, type as caption ============ */
+.C{background:#08090A;color:#EDEAE5;font-family:'IBM Plex Mono'}
+.C .nav{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6E6A65;padding:20px 34px;border-bottom:1px solid rgba(255,255,255,.1)}
+.C .nav b{color:#EDEAE5}
+.C .stage{position:relative;height:290px;background:#08090A}
+.C canvas{display:block;width:100%;height:100%}
+.C .overlay{position:absolute;left:34px;bottom:26px;right:34px;pointer-events:none}
+.C .overlay h2{font-family:'Inter Tight';font-size:40px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.C .overlay .sub{font-size:11.5px;color:#A8A49E;margin-top:10px;letter-spacing:.02em}
+.C .overlay .sub b{color:#22D3EE;font-weight:500}
+.C .panels{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.1);border-top:1px solid rgba(255,255,255,.1)}
+.C .panel{background:#08090A;padding:20px 22px}
+.C .panel .lbl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#6E6A65}
+.C .panel .t{font-family:'Inter Tight';font-size:18px;font-weight:600;margin-top:9px;letter-spacing:-.015em}
+.C .panel .n{font-size:22px;color:#22D3EE;margin-top:11px;font-weight:500}
+.C .panel .d{font-size:11px;color:#8B8781;margin-top:7px;line-height:1.65}
+@media(max-width:760px){
+ .A .grid,.C .panels{grid-template-columns:1fr}
+ .B .lead,.B .art{grid-template-columns:1fr}
+ .A,.B{padding:24px 20px}
+}
+</style></head><body><div class="wrap">
+
+<div class="pagehead">
+  <h1>Three design directions</h1>
+  <p>Same content, same four projects, same numbers. What changes is the visual language: what leads, how dense it is, and what a recruiter's eye lands on first. Pick one and I will build the whole site in it.</p>
+</div>
+
+<!-- ================= A ================= -->
+<section class="dir">
+  <div class="dirbar">
+    <div class="dirname">Direction A &nbsp;/&nbsp; <b>Instrument</b></div>
+    <button class="pick" data-d="Instrument">Choose Instrument</button>
+  </div>
+  <p class="why"><b>Numbers lead. No serif anywhere.</b> Dark, dense, mono-forward, closer to a spec sheet or an instrument panel than a portfolio. Metrics get their own bordered grid at the top, projects become scannable rows. Highest information density of the three, and the most literally on-message for someone whose pitch is correctness under concurrency. Risk: it reads engineered rather than crafted, and there is nowhere for personality to sit.</p>
+  <div class="frame"><div class="A">
+    <div class="nav"><b>RT</b><span>Projects &nbsp;&nbsp; Tools &nbsp;&nbsp; Contact &nbsp;&nbsp; Resume</span></div>
+    <h2>Rudraksh Tiwari</h2>
+    <p class="sub">Backend systems. What I care about most is <em>correctness under concurrency</em>: queues that finish after a worker dies.</p>
+    <div class="grid">
+      <div class="cell"><div class="num">0</div><div class="cap">jobs lost when a worker is killed mid-execution</div></div>
+      <div class="cell"><div class="num">45 / 45</div><div class="cap">executed exactly once under 12 concurrent claimants</div></div>
+      <div class="cell"><div class="num">6.0&times;</div><div class="cap">throughput at concurrency 8 against 1</div></div>
+    </div>
+    <div class="rows">
+      <div class="row"><span class="i">01</span><div><div class="t">taskq</div><div class="d">Distributed task queue, reliability written by hand</div></div><span class="m">Python / Redis / Lua</span></div>
+      <div class="row"><span class="i">02</span><div><div class="t">Clarifi</div><div class="d">AI financial copilot, deployed on AWS</div></div><span class="m">FastAPI / ChromaDB</span></div>
+      <div class="row"><span class="i">03</span><div><div class="t">Loan Risk Analyzer</div><div class="d">Credit decisioning with explainable ML</div></div><span class="m">XGBoost / SHAP</span></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ================= B ================= -->
+<section class="dir">
+  <div class="dirbar">
+    <div class="dirname">Direction B &nbsp;/&nbsp; <b>Dispatch</b></div>
+    <button class="pick" data-d="Dispatch">Choose Dispatch</button>
+  </div>
+  <p class="why"><b>Light, printed, and almost nobody does it.</b> Every developer portfolio a recruiter opens that week is dark. This one is paper. Serif display, wide margins, a marginal column carrying the number while the prose carries the story. Projects read as short articles rather than cards. Risk: it is the least "engineer" of the three, and the live demos have to be redrawn for a light ground.</p>
+  <div class="frame"><div class="B">
+    <div class="nav"><b>Rudraksh Tiwari</b><span>Projects &nbsp; Tools &nbsp; Contact</span></div>
+    <div class="lead">
+      <div class="kicker">Backend and<br>systems engineer<br>Bengaluru<br>Graduating 2027</div>
+      <div>
+        <h2>Correctness under concurrency.</h2>
+        <p class="sub">I build backend systems. Queues that finish after a worker dies, bookings that survive a race, retrieval that answers from <em>real data</em>.</p>
+      </div>
+    </div>
+    <div class="art">
+      <div class="marg"><span class="big">0</span>jobs lost<br>worker killed<br>mid-execution</div>
+      <div>
+        <h3>taskq</h3>
+        <p class="body">A background job system with the reliability machinery written by hand rather than delegated to a library. Anyone can call an existing library's <b>enqueue()</b>. The harder thing is the guarantee underneath it: that once a job is accepted it runs to completion even if the worker is killed mid-execution.</p>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ================= C ================= -->
+<section class="dir">
+  <div class="dirbar">
+    <div class="dirname">Direction C &nbsp;/&nbsp; <b>Runtime</b></div>
+    <button class="pick" data-d="Runtime">Choose Runtime</button>
+  </div>
+  <p class="why"><b>The simulation is the page.</b> Your four live demos stop being illustrations next to text and become the primary surface: full-bleed, running, with the type reduced to a caption over them. Mono throughout, the machine's own voice. This is the version a recruiter screenshots. Risk: it is the most work to build, and if someone skims with motion reduced it has the least to fall back on.</p>
+  <div class="frame"><div class="C">
+    <div class="nav"><b>RT</b><span>Projects &nbsp; Tools &nbsp; Contact</span></div>
+    <div class="stage">
+      <canvas id="cv"></canvas>
+      <div class="overlay">
+        <h2>Rudraksh Tiwari</h2>
+        <p class="sub">worker killed mid-job &nbsp;&nbsp; job reclaimed &nbsp;&nbsp; <b>0</b> jobs lost</p>
+      </div>
+    </div>
+    <div class="panels">
+      <div class="panel"><div class="lbl">01 taskq</div><div class="t">Crash recovery</div><div class="n">0 lost</div><div class="d">Hard-kill a worker mid-job. The lease expires, the reaper promotes it, another worker finishes it.</div></div>
+      <div class="panel"><div class="lbl">02 Clarifi</div><div class="t">Categoriser collapse</div><div class="n">87% &rarr; real</div><div class="d">Treating the payment rail as a category put most of the statement in one bucket. Watch it separate.</div></div>
+    </div>
+  </div></div>
+</section>
+
+</div>
+<script>
+// Direction C preview: the taskq crash-recovery loop, so the demo-first idea
+// can be judged running rather than described.
+(function(){
+  const cv=document.getElementById('cv'); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  let w=0,h=0,workers=[],jobs=[],spawn=.2,kill=3;
+  const COAL='#2A2A2C',SMOKE='#6E6A65',SIG='#F5A524',WON='#22D3EE',FAIL='#F0553B';
+  function build(){const r=cv.getBoundingClientRect();const d=Math.min(devicePixelRatio||1,2);
+    w=r.width;h=r.height;cv.width=w*d;cv.height=h*d;ctx.setTransform(d,0,0,d,0,0);
+    workers=[0,1,2].map(i=>({x:w*(.58+i*.15),alive:true,dead:0,job:null}));jobs=[];}
+  const free=()=>workers.findIndex(k=>k.alive&&!k.job);
+  function step(dt){
+    spawn-=dt; if(spawn<=0){spawn=.5+Math.random()*.4;const t=free();
+      if(t!==-1){const j={x:-8,t,s:'go',a:1,e:0};jobs.push(j);workers[t].job=j;}}
+    kill-=dt; if(kill<=0){kill=6+Math.random()*2;
+      const v=workers.findIndex(k=>k.alive&&k.job&&k.job.s==='run');
+      if(v!==-1){workers[v].alive=false;workers[v].dead=0;const j=workers[v].job;if(j){j.s='lost';j.e=0}workers[v].job=null;}}
+    workers.forEach(k=>{if(!k.alive){k.dead+=dt;if(k.dead>2.2){k.alive=true;k.job=null}}});
+    const sp=w*.34;
+    jobs.forEach(j=>{j.e+=dt;const wx=workers[j.t]?workers[j.t].x:w;
+      if(j.s==='go'||j.s==='re'){j.x=Math.min(wx,j.x+sp*dt);if(j.x>=wx-.5){j.s='run';j.e=0}}
+      else if(j.s==='run'){if(j.e>.9){j.s='ok';j.e=0;const o=workers[j.t];if(o&&o.job===j)o.job=null}}
+      else if(j.s==='lost'){if(j.e>1.2){const n=free();if(n!==-1){j.t=n;j.s='re';j.e=0;workers[n].job=j}}}
+      else if(j.s==='ok'){j.a=Math.max(0,1-j.e/.45)}});
+    jobs=jobs.filter(j=>!(j.s==='ok'&&j.a<=0));}
+  function draw(){ctx.clearRect(0,0,w,h);const y=h*.5;
+    ctx.strokeStyle=COAL;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,y+.5);ctx.lineTo(w,y+.5);ctx.stroke();
+    workers.forEach(k=>{ctx.beginPath();ctx.arc(k.x,y,9,0,7);
+      if(!k.alive){ctx.globalAlpha=.45+.25*Math.sin(k.dead*9);ctx.strokeStyle=FAIL;ctx.stroke();
+        ctx.beginPath();ctx.moveTo(k.x-4,y-4);ctx.lineTo(k.x+4,y+4);ctx.stroke();ctx.globalAlpha=1;}
+      else{ctx.strokeStyle=k.job?SIG:SMOKE;ctx.lineWidth=k.job?1.5:1;ctx.globalAlpha=k.job?1:.5;ctx.stroke();ctx.globalAlpha=1;}});
+    jobs.forEach(j=>{const r=j.s==='ok'?5:3.2;
+      let c=SMOKE; if(j.s==='run'||j.s==='lost'||j.s==='re')c=SIG; else if(j.s==='ok')c=WON;
+      ctx.globalAlpha=j.a*(j.s==='lost'?.55+.45*Math.sin(j.e*10):1);ctx.fillStyle=c;
+      if(j.s==='ok'){ctx.shadowColor=WON;ctx.shadowBlur=12}
+      ctx.beginPath();ctx.arc(j.x,y,r,0,7);ctx.fill();ctx.shadowBlur=0;ctx.globalAlpha=1;});}
+  // Always paint a populated first frame, so the panel is never blank even
+  // where requestAnimationFrame is throttled or never fires.
+  function seed(){ for(let i=0;i<80;i++) step(1/30); draw(); }
+  build(); seed();
+  new ResizeObserver(()=>{build();seed();}).observe(cv);
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){for(let i=0;i<90;i++)step(1/30);draw();return;}
+  let last=performance.now(),acc=0;
+  (function loop(now){requestAnimationFrame(loop);const dt=Math.min((now-last)/1000,.1);last=now;
+    acc+=dt;while(acc>=1/30){step(1/30);acc-=1/30}draw();})(last);
+})();
+document.querySelectorAll('.pick').forEach(b=>b.addEventListener('click',()=>{
+  alert('Tell Claude: "go with ' + b.dataset.d + '"');
+}));
+</script></body></html>

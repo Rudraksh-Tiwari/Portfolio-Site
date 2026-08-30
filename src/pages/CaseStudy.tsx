@@ -82,7 +82,7 @@ export default function CaseStudy() {
           <section key={section.heading} className="rule-t mt-12 grid grid-cols-12 gap-x-8 gap-y-4 pt-9">
             <div className="col-span-12 md:col-span-3">
               <Reveal>
-                <h2 className="eyebrow md:sticky md:top-28">{section.heading}</h2>
+                <h2 className="font-mono text-[12.5px] text-ash md:sticky md:top-28">{section.heading}</h2>
               </Reveal>
             </div>
             <div className="col-span-12 space-y-5 md:col-span-9">
@@ -98,12 +98,14 @@ export default function CaseStudy() {
 
       <section className="rule-t mt-12 grid grid-cols-12 gap-x-8 gap-y-4 pt-9">
         <div className="col-span-12 md:col-span-3">
-          <h2 className="eyebrow">Stack</h2>
+          <h2 className="font-mono text-[12.5px] text-ash">Stack</h2>
         </div>
         <div className="col-span-12 md:col-span-9">
-          <p className="font-mono text-[12.5px] leading-relaxed tracking-[0.03em] text-bone">
-            {stack.join('   ·   ')}
-          </p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[12.5px] tracking-[0.03em] text-bone">
+            {stack.map((t) => (
+              <li key={t}>{t}</li>
+            ))}
+          </ul>
           {timeline && (
             <p className="mt-5 font-mono text-[11px] tracking-[0.06em] text-smoke">{timeline}</p>
           )}

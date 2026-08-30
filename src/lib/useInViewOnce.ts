@@ -4,7 +4,7 @@ import { observeVisibility } from './viewport'
 /**
  * Fires once, the first time the element enters the viewport.
  *
- * Backed by the shared geometry check rather than IntersectionObserver — see
+ * Backed by the shared geometry check rather than IntersectionObserver - see
  * lib/viewport.ts for why. Every reveal on this page starts at opacity 0, so
  * "the visibility signal stopped arriving" must never be a state this can
  * reach: an invisible page is a worse failure than a missed animation.

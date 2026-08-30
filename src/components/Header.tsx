@@ -21,16 +21,16 @@ export default function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 rule-b bg-ink/80 backdrop-blur-md">
-      <div className="shell flex h-20 items-center justify-between">
+      <div className="shell flex h-[79px] items-center justify-between">
         {/*
           The avatar lands here at the end of the intro animation (Stage 4).
-          Keep the id and the box dimensions stable — the flight target is
+          Keep the id and the box dimensions stable - the flight target is
           measured from this element.
         */}
         <Link
           to="/"
           id="avatar-slot"
-          aria-label="Rudraksh Tiwari — home"
+          aria-label="Rudraksh Tiwari, home"
           onClick={() => { if (onHome) scrollToSection('top') }}
           className="block size-10 overflow-hidden rounded-full border border-signal"
         >

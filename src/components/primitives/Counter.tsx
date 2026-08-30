@@ -7,7 +7,7 @@ import { useReducedMotion } from '../../lib/reducedMotion'
  * of the characters alone. One component therefore handles "0.978", "87%",
  * "6.0×" and "13 → 5" (which counts both sides at once) with no special cases.
  *
- * Digits are written straight to the DOM rather than through state — this ticks
+ * Digits are written straight to the DOM rather than through state - this ticks
  * ~60 times a second per number and has no business re-rendering React. There
  * is a timeout backstop so that if requestAnimationFrame never fires, the
  * final value is still shown rather than a frozen zero.
