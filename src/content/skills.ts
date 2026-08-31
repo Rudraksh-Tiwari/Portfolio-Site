@@ -31,6 +31,15 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: 'Infrastructure',
-    items: ['Docker', 'AWS EC2', 'nginx', 'systemd', 'certbot / TLS', 'Git'],
+    items: [
+      'Docker',
+      'AWS EC2',
+      'nginx',
+      'systemd',
+      'certbot / TLS',
+      'Git',
+      'GitHub Actions',
+      'pytest',
+    ],
   },
 ]

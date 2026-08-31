@@ -5,7 +5,13 @@ import { useReducedMotion } from '../../lib/reducedMotion'
 /**
  * Counts every numeric run inside a string up to its target, leaving the rest
  * of the characters alone. One component therefore handles "0.978", "87%",
- * "6.0×" and "13 → 5" (which counts both sides at once) with no special cases.
+ * "6.0×", "2,000" and "13 → 5" (which counts both sides at once) with no
+ * special cases.
+ *
+ * A numeric run deliberately swallows thousands separators, so "2,000" is one
+ * number rather than "2" and "000" - the latter rendered as "2,0", because
+ * Number("000") is 0. Grouped values are re-formatted with their separators on
+ * every frame, so the digits keep their commas while counting.
  *
  * Digits are written straight to the DOM rather than through state - this ticks
  * ~60 times a second per number and has no business re-rendering React. There
@@ -17,15 +23,26 @@ export default function Counter({ value, className }: { value: string; className
   const digits = useRef<HTMLSpanElement[]>([])
   const reduced = useReducedMotion()
 
-  const parts = value.split(/(\d+(?:\.\d+)?)/)
+  const parts = value.split(/(\d[\d,]*(?:\.\d+)?)/)
 
   useEffect(() => {
     if (!inView) return
 
     const nodes = digits.current.filter(Boolean)
+
+    const render = (node: HTMLSpanElement, n: number) => {
+      const decimals = Number(node.dataset.decimals)
+      return node.dataset.grouped === '1'
+        ? n.toLocaleString('en-US', {
+            minimumFractionDigits: decimals,
+            maximumFractionDigits: decimals,
+          })
+        : n.toFixed(decimals)
+    }
+
     const settle = () => {
       for (const node of nodes) {
-        node.textContent = Number(node.dataset.target).toFixed(Number(node.dataset.decimals))
+        node.textContent = render(node, Number(node.dataset.target))
       }
     }
 
@@ -42,8 +59,7 @@ export default function Counter({ value, className }: { value: string; className
       const t = Math.min((now - start) / DURATION, 1)
       const eased = 1 - Math.pow(1 - t, 3)
       for (const node of nodes) {
-        const target = Number(node.dataset.target)
-        node.textContent = (target * eased).toFixed(Number(node.dataset.decimals))
+        node.textContent = render(node, Number(node.dataset.target) * eased)
       }
       if (t < 1) raf = requestAnimationFrame(tick)
     }
@@ -66,15 +82,19 @@ export default function Counter({ value, className }: { value: string; className
         const isNumber = /^\d/.test(part) && i % 2 === 1
         if (!isNumber) return <span key={i}>{part}</span>
 
-        const decimals = (part.split('.')[1] ?? '').length
+        // Strip separators for the arithmetic; remember that they were there
+        // so the value is re-grouped on the way back out.
+        const plain = part.replace(/,/g, '')
+        const decimals = (plain.split('.')[1] ?? '').length
         return (
           <span
             key={i}
             ref={(el) => {
               if (el) digits.current.push(el)
             }}
-            data-target={part}
+            data-target={plain}
             data-decimals={decimals}
+            data-grouped={part.includes(',') ? '1' : '0'}
             /* Reserve the final width so counting up never reflows the line. */
             style={{ display: 'inline-block', minWidth: `${part.length}ch` }}
           >
