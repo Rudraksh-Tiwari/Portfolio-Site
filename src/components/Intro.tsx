@@ -190,19 +190,19 @@ export default function Intro() {
   return (
     <div className="pointer-events-none fixed inset-0 z-[100]" aria-hidden="true">
       {/* opaque ground - the site is already rendered underneath it */}
-      <div ref={overlay} className="absolute inset-0 bg-ink" />
+      <div ref={overlay} className="absolute inset-0 bg-bg" />
 
       {/* shockwave + bloom, positioned at the avatar on impact */}
       <div
         ref={wave}
-        className="absolute size-[120px] rounded-full border border-signal opacity-0"
+        className="absolute size-[120px] rounded-full border border-accent opacity-0"
       />
       <div
         ref={bloom}
         className="absolute size-[120px] rounded-full opacity-0"
         style={{
           background:
-            'radial-gradient(circle, rgba(245,165,36,0.55) 0%, rgba(245,165,36,0.15) 45%, transparent 70%)',
+            'radial-gradient(circle, color-mix(in srgb, var(--accent) 55%, transparent) 0%, color-mix(in srgb, var(--accent) 15%, transparent) 45%, transparent 70%)',
         }}
       />
 
@@ -214,7 +214,7 @@ export default function Intro() {
           <div
             key={i}
             ref={(el) => { rings.current[i] = el }}
-            className="absolute inset-0 rounded-full border border-signal opacity-0"
+            className="absolute inset-0 rounded-full border border-accent opacity-0"
             style={{ transform: `scale(${2.5 + i * 0.7})` }}
           />
         ))}

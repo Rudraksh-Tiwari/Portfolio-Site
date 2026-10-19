@@ -90,15 +90,17 @@ export function useCanvasSim(create: () => Sim) {
   return canvasRef
 }
 
+/** Tuned for the deep-chocolate demo panel (#2A1A08), which stays dark in
+    both site themes. Green is reserved for "succeeded" states. */
 export const PALETTE = {
-  ink: '#08090A',
-  coal: '#2A2A2C',
-  smoke: '#6E6A65',
-  ash: '#A8A49E',
-  bone: '#EDEAE5',
-  signal: '#F5A524',
-  won: '#22D3EE',
-  fail: '#F0553B',
+  ink: '#2A1A08',
+  coal: '#5C4527',
+  smoke: '#A8957A',
+  ash: '#D9CCAA',
+  bone: '#FDFBD4',
+  signal: '#E07A2E',
+  won: '#9FCB8C',
+  fail: '#E5533D',
 } as const
 
 /** Ease-out cubic - the house easing, matching the CSS transitions. */

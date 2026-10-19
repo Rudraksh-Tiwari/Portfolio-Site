@@ -85,7 +85,7 @@ export default function CategoryCollapse() {
         }
 
         // labels underneath, fading between the two readings
-        ctx.font = '10px "IBM Plex Mono", monospace'
+        ctx.font = '500 11px "Hanken Grotesk", system-ui, sans-serif'
         ctx.textBaseline = 'top'
 
         const write = (rows: Row[], alpha: number) => {
@@ -112,7 +112,7 @@ export default function CategoryCollapse() {
         // caption
         ctx.globalAlpha = 1
         ctx.fillStyle = PALETTE.smoke
-        ctx.font = '10px "IBM Plex Mono", monospace'
+        ctx.font = '500 11px "Hanken Grotesk", system-ui, sans-serif'
         const caption =
           mix < 0.5
             ? 'payment rail treated as a category  ->  one bucket'

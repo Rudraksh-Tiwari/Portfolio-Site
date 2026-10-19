@@ -1,37 +1,31 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { jumpToSection, scrollToTopNow } from './smoothScroll'
 
 /**
- * React Router does not restore scroll on navigation. Opening a case study
- * should land at the top; returning to "/#work" should land on the work
- * section rather than the hero.
+ * React Router does not restore scroll on navigation. A new page should open
+ * at the top; a link with a hash should land on that element.
  *
- * The retry runs on timers rather than requestAnimationFrame. rAF is the
- * natural choice, but it is throttled or suspended in plenty of real contexts
- * - and scroll restoration is navigation, not decoration, so it must not
- * depend on the animation clock running.
+ * The retry runs on timers rather than requestAnimationFrame: scroll
+ * restoration is navigation, not decoration, so it must not depend on the
+ * animation clock running.
  */
 export default function ScrollToTop() {
   const { pathname, hash } = useLocation()
 
   useEffect(() => {
     if (!hash) {
-      scrollToTopNow()
+      window.scrollTo(0, 0)
       return
     }
 
-    const id = hash.slice(1)
+    const id = decodeURIComponent(hash.slice(1))
     const timers: number[] = []
     let tries = 0
 
     const attempt = () => {
-      if (jumpToSection(id)) {
-        // Re-issue after layout settles: the page keeps growing for a few
-        // hundred ms as reveals and canvases take their space, which moves the
-        // target out from under the first measurement.
-        timers.push(window.setTimeout(() => jumpToSection(id), 250))
-        timers.push(window.setTimeout(() => jumpToSection(id), 600))
+      const target = document.getElementById(id)
+      if (target) {
+        target.scrollIntoView({ block: 'start' })
         return
       }
       if (tries++ < 40) timers.push(window.setTimeout(attempt, 25))

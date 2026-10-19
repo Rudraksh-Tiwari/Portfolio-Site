@@ -1,62 +1,45 @@
+import { Link } from 'react-router-dom'
+import { ArrowRight, DownloadSimple } from '@phosphor-icons/react'
+import photo from '../assets/photo.jpg'
 import Reveal from './primitives/Reveal'
-import MaskReveal from './primitives/MaskReveal'
-import Magnetic from './primitives/Magnetic'
-import QueueRecovery from '../demos/QueueRecovery'
+import { RESUME_FILENAME, RESUME_URL } from '../content/site'
 
 export default function Hero() {
   return (
-    <section id="top" className="shell pt-24 pb-16 md:pt-24 md:pb-24">
-      <MaskReveal className="h-display max-w-[14ch]">
-        <h1>Rudraksh Tiwari</h1>
-      </MaskReveal>
-
-      <div className="mt-10 grid grid-cols-12 gap-x-8 gap-y-8">
-        <Reveal delay={3} className="col-span-12 md:col-span-7">
-          <p className="lede max-w-[46ch]">
-            I build backend systems. What I care about most is{' '}
-            <em className="font-display text-[1.12em] text-signal not-italic">
-              correctness under concurrency
-            </em>
-            : queues that finish after a worker dies.
+    <section className="shell pt-16 pb-20 md:pt-22 md:pb-24">
+      <div className="grid items-center gap-12 md:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)] md:gap-16">
+        <Reveal>
+          <p className="mb-5 text-[16px] font-medium text-muted">Looking for a Software Engineer Intern role</p>
+          <h1 className="text-[clamp(3rem,8vw,4.75rem)] leading-[1.02] font-bold tracking-[-0.035em]">
+            Rudraksh Tiwari
+          </h1>
+          <p className="mt-6 max-w-[34ch] text-[clamp(1.15rem,2vw,1.375rem)] leading-[1.5]">
+            Backend engineer and final-year CS student at NMIT, Bengaluru. I build systems that stay{' '}
+            <em className="font-semibold text-accent italic">correct</em> when things crash.
           </p>
-
-          <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3">
-            <Magnetic><a
-              href="/resume.pdf"
-              className="border-b border-signal pb-0.5 font-mono text-[12px] tracking-[0.06em] text-signal uppercase"
-            >
-              Résumé ↓
-            </a></Magnetic>
-            <Magnetic><a
-              href="mailto:rudraksh78779@gmail.com"
-              className="border-b border-rule pb-0.5 font-mono text-[12px] tracking-[0.06em] text-ash transition-colors duration-200 hover:border-bone hover:text-bone"
-            >
-              rudraksh78779@gmail.com
-            </a></Magnetic>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link to="/projects" className="btn btn-primary">
+              View projects
+              <ArrowRight size={18} weight="bold" aria-hidden="true" />
+            </Link>
+            <a href={RESUME_URL} download={RESUME_FILENAME} className="btn btn-ghost">
+              Résumé
+              <DownloadSimple size={18} weight="bold" aria-hidden="true" />
+            </a>
           </div>
         </Reveal>
 
-        <Reveal delay={5} className="col-span-12 md:col-span-5">
-          <ul className="eyebrow flex flex-wrap gap-x-6 gap-y-1">
-            <li>CS @ NMIT Bengaluru</li>
-            <li>Graduating 2027</li>
-            <li>Open to SDE roles</li>
-          </ul>
+        <Reveal delay={2}>
+          <img
+            src={photo}
+            alt="Rudraksh Tiwari on the NMIT campus"
+            width={360}
+            height={360}
+            fetchPriority="high"
+            className="aspect-square w-full max-w-[360px] rounded-2xl object-cover md:ml-auto"
+          />
         </Reveal>
       </div>
-
-      {/* Stage 5 replaces this static strip with the live canvas. The proof shown
-          is taskq's crash recovery - the one guarantee that is actually built and
-          has a verification script behind it. */}
-      <Reveal delay={7} className="rule-t mt-16 pt-8">
-        <QueueRecovery />
-
-        <ul className="figure mt-4 flex flex-wrap gap-x-6 gap-y-1 text-[11px] tracking-[0.06em] text-smoke">
-          <li>worker killed mid-job</li>
-          <li className="text-signal">job reclaimed</li>
-          <li><span className="text-won">0</span> jobs lost</li>
-        </ul>
-      </Reveal>
     </section>
   )
 }

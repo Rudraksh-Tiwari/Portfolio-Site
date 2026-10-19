@@ -1,47 +1,23 @@
-import Reveal from './primitives/Reveal'
-import MaskReveal from './primitives/MaskReveal'
-import Magnetic from './primitives/Magnetic'
-
-const LINKS = [
-  { label: 'GitHub', href: 'https://github.com/Rudraksh-Tiwari' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/rudraksh-tiwari-rt/' },
-  { label: 'Résumé ↓', href: '/resume.pdf' },
-]
+import { EMAIL, GITHUB, LINKEDIN, RESUME_FILENAME, RESUME_URL } from '../content/site'
 
 export default function Contact() {
   return (
-    <section id="contact" className="scroll-mt-20">
-      <div className="shell rule-t pt-20 pb-20 md:pt-24 md:pb-28">
-        <div className="grid grid-cols-12 gap-x-8 gap-y-6">
-          <div className="col-span-12 md:col-span-9 md:col-start-4">
-            <MaskReveal className="h-section max-w-[18ch]">
-              <h2>Open to software engineering roles.</h2>
-            </MaskReveal>
-
-            <Reveal delay={2}>
-            <Magnetic strength={0.25}>
-            <a
-              href="mailto:rudraksh78779@gmail.com"
-              className="mt-10 inline-block border-b border-rule pb-2 font-mono text-[clamp(1.05rem,3vw,1.9rem)] tracking-[-0.01em] text-bone transition-colors duration-200 hover:border-signal hover:text-signal"
-            >
-              rudraksh78779@gmail.com
-            </a>
-            </Magnetic>
-            </Reveal>
-
-            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
-              {LINKS.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  {...(l.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
-                  className="border-b border-rule pb-0.5 font-mono text-[12px] tracking-[0.05em] text-ash transition-colors duration-200 hover:border-bone hover:text-bone"
-                >
-                  {l.label}
-                </a>
-              ))}
-            </div>
-          </div>
+    <section id="contact" className="scroll-mt-24 border-t border-line bg-surface">
+      <div className="shell py-20 md:py-24">
+        <h2 className="text-[clamp(2rem,4vw,2.5rem)] font-bold tracking-[-0.02em]">Get in touch</h2>
+        <p className="mt-4 max-w-[52ch] text-[18px] leading-[1.6] text-muted">
+          I'm looking for a Software Engineer Intern role on a team that builds production systems.
+        </p>
+        <a
+          href={`mailto:${EMAIL}`}
+          className="mt-8 inline-block border-b-[3px] border-accent pb-1 text-[clamp(1.5rem,4vw,3rem)] font-bold tracking-[-0.02em] break-all transition-colors duration-200 hover:text-accent"
+        >
+          {EMAIL}
+        </a>
+        <div className="mt-9 flex flex-wrap gap-7 text-[16px]">
+          <a className="txtlink" href={GITHUB} target="_blank" rel="noreferrer">GitHub</a>
+          <a className="txtlink" href={LINKEDIN} target="_blank" rel="noreferrer">LinkedIn</a>
+          <a className="txtlink" href={RESUME_URL} download={RESUME_FILENAME}>Résumé</a>
         </div>
       </div>
     </section>

@@ -5,9 +5,9 @@ import { useCanvasSim, PALETTE, type Sim } from './useCanvasSim'
  * worker processes of four threads each - twelve concurrent claimants - and
  * every job executed exactly once.
  *
- * Twelve claimants race for the grid. A job briefly flashes amber as it is
- * contended, then locks cyan. Because the Lua claim script is atomic, a cell
- * that is already taken can never be taken again - so no cell ever goes cyan
+ * Twelve claimants race for the grid. A job briefly flashes orange as it is
+ * contended, then locks green. Because the Lua claim script is atomic, a cell
+ * that is already taken can never be taken again - so no cell ever goes green
  * twice, which is the thing being demonstrated.
  */
 
@@ -97,7 +97,7 @@ export default function Contention() {
         })
 
         // header readout
-        ctx.font = '10px "IBM Plex Mono", monospace'
+        ctx.font = '500 11px "Hanken Grotesk", system-ui, sans-serif'
         ctx.textBaseline = 'top'
         ctx.fillStyle = PALETTE.smoke
         ctx.fillText(`${CLAIMANTS} concurrent claimants`, 0, 2)

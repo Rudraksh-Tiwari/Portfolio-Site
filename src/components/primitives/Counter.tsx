@@ -86,19 +86,23 @@ export default function Counter({ value, className }: { value: string; className
         // so the value is re-grouped on the way back out.
         const plain = part.replace(/,/g, '')
         const decimals = (plain.split('.')[1] ?? '').length
+        // Reserve exactly the final value's width - an invisible copy shares
+        // the grid cell - so counting up never reflows the line and the
+        // settled number sits flush against its suffix.
         return (
-          <span
-            key={i}
-            ref={(el) => {
-              if (el) digits.current.push(el)
-            }}
-            data-target={plain}
-            data-decimals={decimals}
-            data-grouped={part.includes(',') ? '1' : '0'}
-            /* Reserve the final width so counting up never reflows the line. */
-            style={{ display: 'inline-block', minWidth: `${part.length}ch` }}
-          >
-            {part}
+          <span key={i} style={{ display: 'inline-grid' }}>
+            <span aria-hidden="true" style={{ gridArea: '1 / 1', visibility: 'hidden' }}>{part}</span>
+            <span
+              ref={(el) => {
+                if (el) digits.current.push(el)
+              }}
+              data-target={plain}
+              data-decimals={decimals}
+              data-grouped={part.includes(',') ? '1' : '0'}
+              style={{ gridArea: '1 / 1', textAlign: 'right' }}
+            >
+              {part}
+            </span>
           </span>
         )
       })}

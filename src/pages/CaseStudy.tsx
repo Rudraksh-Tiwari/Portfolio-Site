@@ -1,142 +1,158 @@
-import { Link, useParams } from 'react-router-dom'
-import { projectBySlug, type Tone } from '../content/projects'
-import { Status, DemoFor } from '../components/ProjectPost'
-import Reveal from '../components/primitives/Reveal'
-import MaskReveal from '../components/primitives/MaskReveal'
+import { Link, Navigate, useParams } from 'react-router-dom'
+import { ArrowUpRight } from '@phosphor-icons/react'
+import { legacySlugs, projectBySlug, projects, type Project } from '../content/projects'
 import Counter from '../components/primitives/Counter'
+import Reveal from '../components/primitives/Reveal'
+import NotFound from './NotFound'
+import Contention from '../demos/Contention'
+import CategoryCollapse from '../demos/CategoryCollapse'
+import ShapBars from '../demos/ShapBars'
 
-const TONE: Record<Tone, string> = {
-  signal: 'text-signal',
-  won: 'text-won',
-  fail: 'text-fail',
+const DEMO_TEXT: Record<NonNullable<Project['demo']>, string> = {
+  contention:
+    'Animation: twelve workers race to claim 45 jobs. Each job is claimed exactly once, because the claim is atomic.',
+  category:
+    'Animation: one spending bar flips between the broken categoriser, with 87% in a single UPI bucket, and the fixed breakdown.',
+  shap: 'Animation: SHAP bars for three sample applicants, ending in approved, flagged for review and rejected.',
+}
+
+function Demo({ demo }: { demo: NonNullable<Project['demo']> }) {
+  return (
+    // The canvases are drawn for a dark ground, so the panel stays chocolate
+    // in both themes.
+    <figure className="my-10 rounded-2xl bg-[#2A1A08] px-6 pt-6 pb-5">
+      {demo === 'contention' && <Contention />}
+      {demo === 'category' && <CategoryCollapse />}
+      {demo === 'shap' && <ShapBars />}
+      <figcaption className="mt-4 text-[14px] leading-[1.5] text-[#D9CCAA]">{DEMO_TEXT[demo]}</figcaption>
+    </figure>
+  )
+}
+
+const anchor = (heading: string) => heading.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+
+export function LegacyWorkRedirect() {
+  const { slug = '' } = useParams()
+  return <Navigate to={`/projects/${legacySlugs[slug] ?? slug}`} replace />
 }
 
 export default function CaseStudy() {
   const { slug } = useParams()
   const project = slug ? projectBySlug(slug) : undefined
+  if (!project) return <NotFound />
 
-  if (!project) {
-    return (
-      <div className="shell pt-40 pb-32">
-        <h1 className="h-section">No such project.</h1>
-        <Link
-          to="/"
-          className="mt-8 inline-block border-b border-signal pb-0.5 font-mono text-[12px] tracking-[0.06em] text-signal uppercase"
-        >
-          ← Back to the work
-        </Link>
-      </div>
-    )
-  }
-
-  const { title, subtitle, status, note, figures, stack, links, timeline, caseStudy, demo } = project
+  const { title, brand, subtitle, image, figures, links, caseStudy, demo, role, timeline, stack } = project
+  const next = projects[(projects.indexOf(project) + 1) % projects.length]
 
   return (
-    <article className="shell pt-32 pb-24 md:pt-40">
-      <Link
-        to="/#work"
-        className="font-mono text-[11px] tracking-[0.1em] text-smoke uppercase transition-colors duration-200 hover:text-bone"
-      >
-        ← All work
-      </Link>
+    <article className="shell pt-12 pb-24 md:pb-28">
+      <Link to="/projects" className="txtlink text-[15px]">Back to projects</Link>
 
-      <header className="mt-10">
-        <MaskReveal className="h-display text-[clamp(2.75rem,7vw,5rem)]">
-          <h1>{title}</h1>
-        </MaskReveal>
-        <Reveal delay={1}>
-          <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <p className="text-[16px] text-ash">{subtitle}</p>
-            <Status status={status} />
-          </div>
-        </Reveal>
+      <header className="mt-10 flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <h1
+            translate={brand ? 'no' : undefined}
+            className="text-[clamp(2.5rem,6vw,4rem)] leading-[1.05] font-bold tracking-[-0.035em]"
+          >
+            {title}
+          </h1>
+          <p className="mt-3 max-w-[46ch] text-[clamp(1.1rem,2vw,1.3rem)] leading-[1.5] text-muted">{subtitle}</p>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          {links.map((l, i) => (
+            <a
+              key={l.href + l.label}
+              href={l.href}
+              target="_blank"
+              rel="noreferrer"
+              className={`btn ${i === 0 ? 'btn-primary' : 'btn-ghost'}`}
+            >
+              {l.label}
+              <ArrowUpRight size={18} weight="bold" aria-hidden="true" />
+            </a>
+          ))}
+        </div>
       </header>
 
-      {demo && (
-        <Reveal delay={2} className="rule-t mt-12 pt-8">
-          <DemoFor demo={demo} />
-        </Reveal>
+      {image && (
+        <img
+          src={image.src}
+          alt={image.alt}
+          width={image.width}
+          height={image.height}
+          fetchPriority="high"
+          className="mt-10 block h-auto w-full max-w-[960px] rounded-2xl border border-line bg-white"
+        />
       )}
 
       {figures.length > 0 && (
-        <dl className="rule-t mt-10 flex flex-wrap gap-x-14 gap-y-7 pt-9">
+        <dl className="mt-12 grid grid-cols-2 gap-8 border-b border-line pb-12 md:grid-cols-4">
           {figures.map((f) => (
-            <div key={f.value} className="max-w-[26ch]">
-              <dt className={`figure text-[clamp(1.75rem,3.4vw,2.5rem)] leading-none ${TONE[f.tone]}`}>
+            <div key={f.value}>
+              <dt className="text-[clamp(2rem,3.5vw,2.75rem)] leading-none font-bold text-accent">
                 <Counter value={f.value} />
               </dt>
-              <dd className="mt-2 text-[12.5px] leading-snug text-smoke">{f.label}</dd>
+              <dd className="mt-2 text-[15px] leading-snug text-muted">{f.label}</dd>
             </div>
           ))}
         </dl>
       )}
 
-      {note && (
-        <p className="mt-8 max-w-[62ch] border-l border-rule pl-4 font-mono text-[12px] leading-[1.7] text-smoke">
-          {note}
-        </p>
-      )}
-
-      <div className="mt-4">
-        {caseStudy.map((section) => (
-          <section key={section.heading} className="rule-t mt-12 grid grid-cols-12 gap-x-8 gap-y-4 pt-9">
-            <div className="col-span-12 md:col-span-3">
-              <Reveal>
-                <h2 className="font-mono text-[12.5px] text-ash md:sticky md:top-28">{section.heading}</h2>
-              </Reveal>
-            </div>
-            <div className="col-span-12 space-y-5 md:col-span-9">
-              {section.body.map((p, i) => (
-                <Reveal key={i} delay={i}>
-                  <p className="max-w-[68ch] text-[15.5px] leading-[1.7] text-ash">{p}</p>
-                </Reveal>
+      <div className="mt-16 grid gap-16 md:grid-cols-[minmax(0,8fr)_minmax(0,4fr)] md:gap-18">
+        <div className="prose-cs">
+          {caseStudy.map((section, i) => (
+            <section key={section.heading}>
+              <h2 id={anchor(section.heading)}>{section.heading}</h2>
+              {section.body.map((p) => (
+                <p key={p.slice(0, 40)}>{p}</p>
               ))}
-            </div>
-          </section>
-        ))}
-      </div>
-
-      <section className="rule-t mt-12 grid grid-cols-12 gap-x-8 gap-y-4 pt-9">
-        <div className="col-span-12 md:col-span-3">
-          <h2 className="font-mono text-[12.5px] text-ash">Stack</h2>
+              {i === 1 && demo && <Demo demo={demo} />}
+            </section>
+          ))}
         </div>
-        <div className="col-span-12 md:col-span-9">
-          <ul className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[12.5px] tracking-[0.03em] text-bone">
-            {stack.map((t) => (
-              <li key={t}>{t}</li>
-            ))}
-          </ul>
-          {timeline && (
-            <p className="mt-5 font-mono text-[11px] tracking-[0.06em] text-smoke">{timeline}</p>
-          )}
-          <div className="mt-8 flex flex-wrap gap-x-7 gap-y-3">
-            {links.map((l) => (
-              <a
-                key={l.href + l.label}
-                href={l.href}
-                target="_blank"
-                rel="noreferrer"
-                className={`border-b pb-0.5 font-mono text-[12px] tracking-[0.05em] transition-colors duration-200 ${
-                  l.primary
-                    ? 'border-signal text-signal hover:border-bone hover:text-bone'
-                    : 'border-rule text-ash hover:border-bone hover:text-bone'
-                }`}
-              >
-                {l.label} ↗
-              </a>
-            ))}
+
+        <aside className="flex flex-col gap-8 text-[16px] md:sticky md:top-28 md:self-start">
+          <div>
+            <h2 className="mb-2.5 text-[15px] font-semibold text-muted">Role</h2>
+            <p className="font-semibold">{role}</p>
           </div>
-        </div>
-      </section>
-
-      <div className="rule-t mt-14 pt-10">
-        <Link
-          to="/#work"
-          className="border border-signal px-4 py-2.5 font-mono text-[11px] tracking-[0.1em] text-signal uppercase transition-colors duration-200 hover:bg-signal hover:text-ink"
-        >
-          ← All work
-        </Link>
+          <div>
+            <h2 className="mb-2.5 text-[15px] font-semibold text-muted">Timeline</h2>
+            <p className="font-semibold">{timeline}</p>
+          </div>
+          <div>
+            <h2 className="mb-3 text-[15px] font-semibold text-muted">Stack</h2>
+            <ul className="flex flex-wrap gap-2">
+              {stack.map((t) => (
+                <li key={t} className="tag text-fg">{t}</li>
+              ))}
+            </ul>
+          </div>
+          <nav aria-label="On this page" className="hidden md:block">
+            <h2 className="mb-2.5 text-[15px] font-semibold text-muted">On this page</h2>
+            <ul className="flex flex-col gap-2 font-medium">
+              {caseStudy.map((s) => (
+                <li key={s.heading}>
+                  <a href={`#${anchor(s.heading)}`} className="transition-colors duration-200 hover:text-accent">
+                    {s.heading}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </aside>
       </div>
+
+      <Reveal className="mt-22 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-10">
+        <span className="text-[15px] text-muted">Next project</span>
+        <Link
+          to={`/projects/${next.slug}`}
+          translate={next.brand ? 'no' : undefined}
+          className="border-b-[3px] border-accent text-[clamp(1.5rem,3vw,2rem)] font-bold tracking-[-0.02em] transition-colors duration-200 hover:text-accent"
+        >
+          {next.title}
+        </Link>
+      </Reveal>
     </article>
   )
 }

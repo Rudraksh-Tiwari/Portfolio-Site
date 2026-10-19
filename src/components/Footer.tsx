@@ -1,9 +1,10 @@
 export default function Footer() {
   return (
-    <footer className="shell rule-t py-10">
-      <p className="font-mono text-[11px] tracking-[0.06em] text-smoke">
-        Rudraksh Tiwari · Built by hand
-      </p>
+    <footer className="border-t border-line">
+      <div className="shell flex flex-wrap justify-between gap-3 py-7 text-[14px] text-muted">
+        <span>© 2026 Rudraksh Tiwari</span>
+        <span>Built with React and Vite</span>
+      </div>
     </footer>
   )
 }

@@ -1,3 +1,8 @@
 {
+  "redirects": [
+    { "source": "/resume.pdf", "destination": "/Rudraksh_Tiwari_Resume.pdf", "permanent": true },
+    { "source": "/work/loan-risk-analyzer", "destination": "/projects/credit-risk-engine", "permanent": true },
+    { "source": "/work/:slug", "destination": "/projects/:slug", "permanent": true }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

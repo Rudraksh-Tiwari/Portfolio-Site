@@ -90,7 +90,7 @@ export default function ShapBars() {
         ctx.lineTo(axis + 0.5, top + app.features.length * rowH + 2)
         ctx.stroke()
 
-        ctx.font = '9.5px "IBM Plex Mono", monospace'
+        ctx.font = '500 10.5px "Hanken Grotesk", system-ui, sans-serif'
         ctx.textBaseline = 'middle'
 
         app.features.forEach((f, i) => {
@@ -116,18 +116,18 @@ export default function ShapBars() {
         const baseline = top + app.features.length * rowH + 15
         ctx.globalAlpha = verdictAlpha
         ctx.textAlign = 'left'
-        ctx.font = '11px "IBM Plex Mono", monospace'
+        ctx.font = '600 12px "Hanken Grotesk", system-ui, sans-serif'
         ctx.fillStyle = app.tone
         ctx.fillText(app.verdict, 0, baseline)
 
         ctx.fillStyle = PALETTE.smoke
-        ctx.font = '9.5px "IBM Plex Mono", monospace'
+        ctx.font = '500 10.5px "Hanken Grotesk", system-ui, sans-serif'
         ctx.fillText(`risk ${app.risk.toFixed(2)}`, Math.min(150, w * 0.42), baseline)
         ctx.globalAlpha = 1
 
         // the tier scale, so the thresholds are legible
         ctx.globalAlpha = 0.9
-        ctx.font = '9px "IBM Plex Mono", monospace'
+        ctx.font = '500 10px "Hanken Grotesk", system-ui, sans-serif'
         ctx.fillStyle = PALETTE.coal
         ctx.fillText('approved < 0.30   ·   review < 0.70   ·   rejected', Math.min(230, w * 0.55), baseline)
         ctx.globalAlpha = 1
